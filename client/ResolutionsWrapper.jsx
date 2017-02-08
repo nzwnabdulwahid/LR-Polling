@@ -5,8 +5,12 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import ResolutionForm from './ResolutionForm.jsx';
 import ResolutionSingle from './ResolutionSingle.jsx';
 
+import PostForm from './PostForm.jsx';
+
+
 
 Resolutions = new Mongo.Collection("resolutions"); 
+Posts = new Mongo.Collection("posts");
 
 export default class ResolutionsWrapper extends TrackerReact(React.Component) {
 
@@ -16,6 +20,7 @@ export default class ResolutionsWrapper extends TrackerReact(React.Component) {
 		this.state = {
 			subscription: {
 				resolutions: Meteor.subscribe('userResolutions'),
+				blogPost: Meteor.subscribe('allBlogPost')
 				
 			}
 		}
@@ -29,24 +34,19 @@ export default class ResolutionsWrapper extends TrackerReact(React.Component) {
 		return Resolutions.find().fetch();
 	}	
 
+	blogPost(){
+		return Posts.find().fetch();
+	}
+
 	
 	render () {
 		
-		// if(res.length < 1){
-		// 	return (
-		// 		<div> Loading... </div>
-		// 	)
-		// }
+		
 		return (
 			<div>
-				<h1>My Resolution</h1>	
-				<ResolutionForm/>			
-				<ul className = "resolutions">
-				{	this.resolutions().map( (resolution) => {
-						return <ResolutionSingle key={resolution._id} resolution={resolution}/>
-				})}					
+				<h1>Blog Posts</h1>	
+				<PostForm/>			
 				
-				</ul>
 
 				
 				

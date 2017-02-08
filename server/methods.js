@@ -28,6 +28,15 @@ Meteor.methods({
 			throw new Meteor.Error('not-logged-in');
 		}
 		Resolutions.remove(resolution._id);
+	},
+
+	addPost(title, post){
+		Posts.insert({
+			title: title,
+			content: post,
+			createdAt: new Date()
+
+		});
 	}
 
 
