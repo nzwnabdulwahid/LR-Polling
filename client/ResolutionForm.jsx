@@ -18,7 +18,7 @@ export default class ResolutionsForm extends Component {
 		return  (
 			<form className="new-resolution" onSubmit={this.addResolution.bind(this)}>
 				<input type="text" ref="resolution" placeholder="New Resolution Here" />
-
+				
 			</form>
 		)
 	}

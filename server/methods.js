@@ -1,21 +1,34 @@
 Meteor.methods({
+
 	addResolutions(resolution){
+		if(!Meteor.userId()){
+			throw new Meteor.Error('not-logged-in');
+		}
 		Resolutions.insert({
 			text: resolution,
 			complete: false,
-			createdAt : new Date()
+			createdAt : new Date(),
+			user: Meteor.userId()
 		});
 	},
 
-	toggleResolution(id, status){
-		Resolutions.update(id, {
+	toggleResolution(resolution){
+		if(Meteor.userId() !== resolution.user){
+			throw new Meteor.Error('not-logged-in');
+		}
+		Resolutions.update(resolution._id, {
 			$set: {
-				complete: !status
+				complete: !resolution.complete
 			}
 		});
 	},
 
-	deleteResolution(id){
-		Resolutions.remove(id);
+	deleteResolution(resolution){
+		if(Meteor.userId() !== resolution.user){
+			throw new Meteor.Error('not-logged-in');
+		}
+		Resolutions.remove(resolution._id);
 	}
+
+
 });
